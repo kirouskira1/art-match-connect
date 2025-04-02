@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -62,19 +61,7 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				},
-				// Traditional colors of Pernambuco and Recife
-				'brand-blue': '#003D7A',       // Blue from Pernambuco flag
-				'brand-red': '#EB3237',        // Red from Pernambuco flag
-				'brand-yellow': '#FFC914',     // Yellow - common in frevo costumes
-				'brand-yellow-light': '#FFD95D', 
-				'brand-clay': '#BD4F35',       // Clay/terracotta - maracatu costumes
-				'brand-green': '#007B3E',      // Green - folk art
-				'brand-accent': '#9E4244',     // Burgundy from Recife's traditional architecture
-				
-				// Replacing previous purple colors
-				'brand-purple': '#003D7A',     // Using blue instead of purple
-				'brand-purple-light': '#0064C8', // Lighter blue
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -97,21 +84,11 @@ export default {
 					to: {
 						height: '0'
 					}
-				},
-				'fade-in': {
-					from: { opacity: '0' },
-					to: { opacity: '1' }
-				},
-				'slide-up': {
-					from: { transform: 'translateY(10px)', opacity: '0' },
-					to: { transform: 'translateY(0)', opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.3s ease-out',
-				'slide-up': 'slide-up 0.4s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out'
 			}
 		}
 	},

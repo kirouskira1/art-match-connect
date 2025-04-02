@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, Heart, Share2, Bookmark, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 export interface EditalProps {
   id: string;
@@ -15,6 +16,7 @@ export interface EditalProps {
   imageUrl: string;
   saved?: boolean;
   liked?: boolean;
+  onSaveToggle?: (edital: EditalProps) => void;
 }
 
 export const EditalCard: React.FC<EditalProps> = ({
@@ -26,10 +28,12 @@ export const EditalCard: React.FC<EditalProps> = ({
   matchPercentage,
   imageUrl,
   saved = false,
-  liked = false
+  liked = false,
+  onSaveToggle
 }) => {
   const [isSaved, setIsSaved] = React.useState(saved);
   const [isLiked, setIsLiked] = React.useState(liked);
+  const { toast } = useToast();
 
   // Format deadline to display days remaining
   const daysRemaining = () => {
@@ -49,6 +53,67 @@ export const EditalCard: React.FC<EditalProps> = ({
     if (matchPercentage >= 85) return "bg-green-500";
     if (matchPercentage >= 60) return "bg-amber-500";
     return "bg-gray-300";
+  };
+
+  const handleSave = () => {
+    const newSavedState = !isSaved;
+    setIsSaved(newSavedState);
+    
+    // Update local storage with the saved state
+    const savedEditals = JSON.parse(localStorage.getItem('savedEditals') || '[]');
+    
+    if (newSavedState) {
+      // Add to saved
+      const editalToSave = {
+        id, title, organization, deadline, tags, matchPercentage, imageUrl, saved: true, liked: isLiked
+      };
+      
+      // Check if it's already saved to avoid duplicates
+      if (!savedEditals.some((edital: EditalProps) => edital.id === id)) {
+        savedEditals.push(editalToSave);
+        localStorage.setItem('savedEditals', JSON.stringify(savedEditals));
+        
+        toast({
+          title: "Edital salvo",
+          description: "O edital foi adicionado aos seus salvos."
+        });
+      }
+    } else {
+      // Remove from saved
+      const filteredEditals = savedEditals.filter((edital: EditalProps) => edital.id !== id);
+      localStorage.setItem('savedEditals', JSON.stringify(filteredEditals));
+      
+      if (onSaveToggle) {
+        onSaveToggle({
+          id, title, organization, deadline, tags, matchPercentage, imageUrl, saved: false, liked: isLiked
+        });
+      } else {
+        toast({
+          title: "Edital removido",
+          description: "O edital foi removido dos seus salvos."
+        });
+      }
+    }
+  };
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    
+    toast({
+      title: isLiked ? "Curtida removida" : "Edital curtido",
+      description: isLiked 
+        ? "Você removeu sua curtida deste edital." 
+        : "Você curtiu este edital."
+    });
+  };
+
+  const handleShare = () => {
+    // In a real app, this would use the Web Share API
+    // For this demo, we'll just show a toast
+    toast({
+      title: "Link copiado!",
+      description: "O link para este edital foi copiado para sua área de transferência."
+    });
   };
 
   return (
@@ -102,26 +167,32 @@ export const EditalCard: React.FC<EditalProps> = ({
         <div className="mt-4 flex items-center justify-between">
           <div className="flex space-x-3">
             <button 
-              onClick={() => setIsLiked(!isLiked)}
+              onClick={handleLike}
               className={`p-2 rounded-full ${isLiked ? 'bg-red-50 text-red-500' : 'hover:bg-gray-100 text-gray-500'}`}
+              aria-label={isLiked ? "Remover curtida" : "Curtir edital"}
             >
               <Heart size={20} className={isLiked ? 'fill-current' : ''} />
             </button>
             
             <button 
-              onClick={() => setIsSaved(!isSaved)}
-              className={`p-2 rounded-full ${isSaved ? 'bg-brand-purple bg-opacity-10 text-brand-purple' : 'hover:bg-gray-100 text-gray-500'}`}
+              onClick={handleSave}
+              className={`p-2 rounded-full ${isSaved ? 'bg-brand-blue bg-opacity-10 text-brand-blue' : 'hover:bg-gray-100 text-gray-500'}`}
+              aria-label={isSaved ? "Remover dos salvos" : "Salvar edital"}
             >
               <Bookmark size={20} className={isSaved ? 'fill-current' : ''} />
             </button>
             
-            <button className="p-2 rounded-full hover:bg-gray-100 text-gray-500">
+            <button 
+              onClick={handleShare}
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-500"
+              aria-label="Compartilhar edital"
+            >
               <Share2 size={20} />
             </button>
           </div>
           
           <Button 
-            className="bg-brand-purple hover:bg-brand-accent text-white flex items-center gap-1.5"
+            className="bg-brand-blue hover:bg-brand-accent text-white flex items-center gap-1.5"
           >
             <span>Aplicar</span>
             <ExternalLink size={16} />

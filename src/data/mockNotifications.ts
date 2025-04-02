@@ -12,7 +12,7 @@ export const mockNotifications: NotificationItem[] = [
   {
     id: '1',
     title: 'Edital perfeito para você!',
-    description: 'Edital de apoio às manifestações do Carnaval de Pernambuco tem 92% de compatibilidade com seu perfil.',
+    description: 'Edital de fotografia documental da Secretaria de Cultura tem 92% de compatibilidade com seu perfil.',
     date: getDate(0), // Today
     type: 'match',
     read: false
@@ -20,7 +20,7 @@ export const mockNotifications: NotificationItem[] = [
   {
     id: '2',
     title: 'Prazo se aproximando',
-    description: 'O edital "Festival de Arte Popular do Agreste" encerra em 2 dias.',
+    description: 'O edital "Festival de Arte Contemporânea" encerra em 2 dias.',
     date: getDate(1), // Yesterday
     type: 'deadline',
     read: false
@@ -28,7 +28,7 @@ export const mockNotifications: NotificationItem[] = [
   {
     id: '3',
     title: 'Novo edital publicado',
-    description: 'Um edital com suas tags de interesse foi publicado: "Concurso de Cordel e Xilogravura do Sertão".',
+    description: 'Um edital com suas tags de interesse foi publicado: "Concurso de Fotografia Urbana".',
     date: getDate(2),
     type: 'match',
     read: true
@@ -36,7 +36,7 @@ export const mockNotifications: NotificationItem[] = [
   {
     id: '4',
     title: 'Bem-vindo ao ArtMatch',
-    description: 'Complete seu perfil para receber editais de cultura popular nordestina personalizados para você.',
+    description: 'Complete seu perfil para receber editais personalizados para você.',
     date: getDate(7),
     type: 'system',
     read: true

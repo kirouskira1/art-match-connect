@@ -63,18 +63,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Traditional colors of Pernambuco and Recife
-				'brand-blue': '#003D7A',       // Blue from Pernambuco flag
-				'brand-red': '#EB3237',        // Red from Pernambuco flag
-				'brand-yellow': '#FFC914',     // Yellow - common in frevo costumes
-				'brand-yellow-light': '#FFD95D', 
-				'brand-clay': '#BD4F35',       // Clay/terracotta - maracatu costumes
-				'brand-green': '#007B3E',      // Green - folk art
-				'brand-accent': '#9E4244',     // Burgundy from Recife's traditional architecture
-				
-				// Replacing previous purple colors
-				'brand-purple': '#003D7A',     // Using blue instead of purple
-				'brand-purple-light': '#0064C8', // Lighter blue
+				// Custom colors for our art grants platform
+				'brand-purple': '#8B5CF6',
+				'brand-purple-light': '#A78BFA',
+				'brand-yellow': '#FBBF24',
+				'brand-yellow-light': '#FCD34D',
+				'brand-accent': '#7E69AB',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
